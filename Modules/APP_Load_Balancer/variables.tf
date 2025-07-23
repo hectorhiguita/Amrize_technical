@@ -23,3 +23,8 @@ variable "target_group_arn" {
   description = "ARN of the target group to forward traffic to"
   type        = string
 }
+
+variable "vpc_variables" {
+  description = "Configuration variables for VPC including CIDR and Name"
+  type        = map(string)
+}

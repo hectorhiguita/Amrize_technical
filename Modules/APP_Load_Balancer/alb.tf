@@ -7,9 +7,15 @@ resource "aws_lb" "Amrize_Testing_LB" {
 
   enable_deletion_protection = false
 
-  tags = {
-    Name        = "${var.tags.project}-ALB"
-    Environment = "production"
+tags = {
+    "Name" = "ALB-${var.vpc_variables.Name}"
+    "date" = var.tags["date"]
+    "owner" = var.tags["owner"]
+    "cloud" = var.tags["cloud"]
+    "IAC" = var.tags["IAC"]
+    "IAC_Version" = var.tags["IAC_Version"]
+    "project" = var.tags["project"]
+    "region" = var.tags["region"]    
   }
 }
 

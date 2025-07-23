@@ -50,3 +50,13 @@ variable "ECR_Name" {
   description = "value for ECR repository name"
   type        = string
 }
+
+variable "egress_ports_list" {
+  description = "Egress port for security group"
+  type        = number
+}
+
+variable "egress_cidr_blocks" {
+  description = "List of CIDR blocks for egress rules"
+  type        = list(string)
+}

@@ -11,12 +11,14 @@ provider "aws" {
 }
 
 module "VPCs" {
-  source = "./Modules/VPC"
-  vpc_variables      = var.vpc_variables
-  subnets            = var.subnets
-  ingress_ports_list = var.ingress_ports_list
-  sg_ingress_cidr    = var.sg_ingress_cidr
-  tags = var.tags
+  source               = "./Modules/VPC"
+  vpc_variables        = var.vpc_variables
+  subnets              = var.subnets
+  ingress_ports_list   = var.ingress_ports_list
+  sg_ingress_cidr      = var.sg_ingress_cidr
+  egress_cidr_blocks   = var.egress_cidr_blocks
+  egress_ports_list    = var.egress_ports_list
+  tags                 = var.tags
 }
 
 module "terraform_state_backend" {
@@ -34,24 +36,29 @@ module "terraform_state_backend" {
 
 
 module "ECS" {
-  source = "./Modules/ECS"
+  source             = "./Modules/ECS"
   ECS_Name           = var.ECS_Name
   private_subnet_ids = values(module.VPCs.private_subnet_ids)
   vpc_id             = module.VPCs.vpc_id
   security_group_ids = [module.VPCs.public_security_group_id]
+  tags               = var.tags
+  vpc_variables      = var.vpc_variables
 }
 
 module "ECR" {
-  source = "./Modules/ECR"
-  ECR_Name = var.ECR_Name
+  source        = "./Modules/ECR"
+  ECR_Name      = var.ECR_Name
+  tags          = var.tags
+  vpc_variables = var.vpc_variables
 }
 
 module "Amrize_Testing_LB" {
   source = "./Modules/APP_Load_Balancer"
   
-  tags                = var.tags
-  vpc_id              = module.VPCs.vpc_id
-  public_subnet_ids   = values(module.VPCs.public_subnet_ids)
-  security_group_ids  = [module.VPCs.public_security_group_id]
-  target_group_arn    = module.ECS.target_group_arn
+  tags               = var.tags
+  vpc_id             = module.VPCs.vpc_id
+  public_subnet_ids  = values(module.VPCs.public_subnet_ids)
+  security_group_ids = [module.VPCs.public_security_group_id]
+  target_group_arn   = module.ECS.target_group_arn
+  vpc_variables      = var.vpc_variables
 }

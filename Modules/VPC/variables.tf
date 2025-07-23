@@ -22,17 +22,26 @@ variable "subnets" {
 variable "ingress_ports_list" {
   description = "List of ingress ports for security group"
   type        = list(number)
-  default     = [80, 443, 22]
 }
 
 variable "sg_ingress_cidr" {
   description = "CIDR block for security group ingress rules"
   type        = string
-  default     = "0.0.0.0/0"
+
 }
 
 variable "tags" {
   description = "Common tags to apply to all resources"
   type        = map(string)
   default     = {}
+}
+
+variable "egress_ports_list" {
+  description = "Egress port for security group"
+  type        = number
+}
+
+variable "egress_cidr_blocks" {
+  description = "List of CIDR blocks allowed for egress traffic"
+  type        = list(string)
 }

@@ -5,6 +5,16 @@ resource "aws_ecs_cluster" "ECS_Amrize" {
     name  = "containerInsights"
     value = "enabled"
   }
+  tags = {
+    "Name" = "ECS-${var.vpc_variables.Name}"
+    "date" = var.tags["date"]
+    "owner" = var.tags["owner"]
+    "cloud" = var.tags["cloud"]
+    "IAC" = var.tags["IAC"]
+    "IAC_Version" = var.tags["IAC_Version"]
+    "project" = var.tags["project"]
+    "region" = var.tags["region"]    
+  }
 }
 
 resource "aws_ecs_task_definition" "apache" {
