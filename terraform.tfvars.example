@@ -1,0 +1,23 @@
+# Example Terraform variables file
+# Copy this file to terraform.tfvars and fill in your actual values
+# terraform.tfvars is excluded from version control for security
+
+# AWS Region
+aws_region = "us-east-1"
+
+# Project configuration
+project_name = "my-project"
+environment = "dev"
+
+# VPC Configuration
+vpc_cidr = "10.0.0.0/16"
+public_subnet_cidrs = ["10.0.1.0/24", "10.0.2.0/24"]
+private_subnet_cidrs = ["10.0.3.0/24", "10.0.4.0/24"]
+
+# ECS Configuration
+app_port = 80
+app_image = "nginx:latest"
+fargate_cpu = 256
+fargate_memory = 512
+
+# Add any other variables your infrastructure needs
